@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 
 import payment from "./routes/payment.js";
+import auth from './middleware/auth.js';
 
 
 const app = express()
@@ -12,9 +13,10 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 app.use('/uploads', express.static('uploads'))
 app.use(cors())
-
+// app.use(auth)
 
 app.use('/api/payment', payment)
+
 
 
 
