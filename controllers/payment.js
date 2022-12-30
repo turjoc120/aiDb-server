@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import user from '../models/user.js';
 import { stripe } from '../utils/stripe.js';
 
 // get plans form stripe 
@@ -17,19 +18,26 @@ export const getPlans = async (req, res) => {
 export const checkoutSession = async (req, res) => {
   try {
     console.log("hit..checkoutSession..con");
+    // get customer id form user db 
+    const userDetails = await user.findOne({ email: req.body.email })
+
+    // checkout session 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [{
-        price: req.body.id
+        price: req.body.priceId
       }],
+      customer: userDetails.customerId
+      ,
       subscription_data: [{
         trial_period_days: 10
       }],
       success_url: "http://localhost:3000/app/crm/dashboard",
       cancel_url: "http://localhost:3000/plans"
     })
-    res.json(prices)
+
+    res.json(session)
   } catch (error) {
     console.log(error)
     res.status(404).json({ message: error.message })

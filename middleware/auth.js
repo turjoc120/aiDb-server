@@ -3,7 +3,7 @@ import admin from "../utils/firebase.js";
 const auth = async (req, res, next) => {
     let { authorization } = req.headers;
     console.log("token ------ " + authorization);
-    console.log("uid ------ " + req.headers.uid);
+    console.log("body ------ " + req.body);
     if (!authorization) {
         return res.status(403).json({
             errors: [

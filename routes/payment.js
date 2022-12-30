@@ -1,5 +1,5 @@
 import express from "express";
-import { getPlans } from "../controllers/payment.js";
+import { checkoutSession, getPlans } from "../controllers/payment.js";
 import auth from "../middleware/auth.js";
 
 
@@ -10,5 +10,6 @@ const router = express.Router();
 // router.post("/addpayment", paymentDetails);
 // router.get("/is-user", auth, isUser);
 router.get("/get-plans", getPlans);
+router.post("/subscription", auth, checkoutSession);
 
 export default router;
