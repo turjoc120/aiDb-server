@@ -8,11 +8,15 @@ import { stripe } from '../utils/stripe.js';
 export const addUser = async (req, res) => {
 
     try {
-        const userDe = await user.create({ ...req.body })
+        // add user to stripe customer 
         const customer = await stripe.customers.create({
             email: req.body.email
         });
-        res.status(200).json({ status: "valid", userDe, customer, message: "user added" })
+
+        // add user to db 
+        const userDe = await user.create({ ...req.body, customerId: customer.id })
+
+        res.status(200).json({ status: "valid", userDe: { ...userDe, customerId: customer.id }, message: "user added" })
     } catch (error) {
         console.log(error);
         res.status(409).json({ message: error.message })
@@ -21,7 +25,6 @@ export const addUser = async (req, res) => {
 
 // all user 
 export const getUsers = async (req, res) => {
-
     try {
         const alluser = await user.find()
 
