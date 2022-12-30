@@ -8,7 +8,7 @@ const router = express.Router();
 // router.get("/getMyAds/:userId", multipleUpload, getMyAds);
 // router.patch("/addFavourites/:userId/:postId",, getMyAds);
 // router.post("/addpayment", paymentDetails);
-router.get("/is-user", isUser);
-router.post("/get-plans", auth, getPlans);
+router.get("/is-user", auth, isUser);
+router.get("/get-plans", getPlans);
 
 export default router;

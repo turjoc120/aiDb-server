@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 
 import payment from "./routes/payment.js";
+import user from "./routes/user.js";
 import auth from './middleware/auth.js';
 
 
@@ -16,6 +17,7 @@ app.use(cors())
 // app.use(auth)
 
 app.use('/api/payment', payment)
+app.use('/api/user', user)
 
 
 

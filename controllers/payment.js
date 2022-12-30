@@ -4,10 +4,12 @@ import { stripe } from '../utils/stripe.js';
 
 export const getPlans = async (req, res) => {
   try {
+    console.log("hit..plans..con");
     const prices = await stripe.prices.list({
-      apiKey: process.env.STRIPE_SECRET_KEY
+      apiKey: process.env.STRIPE_SECRET_KEY,
+      limit: 2
     })
-    res.status(200).json(prices)
+    res.json(prices)
   } catch (error) {
     console.log(error)
     res.status(404).json({ message: error.message })
