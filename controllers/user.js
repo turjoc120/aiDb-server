@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import user from '../models/user.js';
+import { stripe } from '../utils/stripe.js';
 
 
 
@@ -8,7 +9,10 @@ export const addUser = async (req, res) => {
 
     try {
         const userDe = await user.create({ ...req.body })
-        res.status(200).json({ status: "valid", userDe, message: "user added" })
+        const customer = await stripe.customers.create({
+            email: req.body.email
+        });
+        res.status(200).json({ status: "valid", userDe, customer, message: "user added" })
     } catch (error) {
         console.log(error);
         res.status(409).json({ message: error.message })
