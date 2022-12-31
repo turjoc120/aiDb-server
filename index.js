@@ -2,12 +2,12 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
-
+import dotenv from "dotenv"
 import payment from "./routes/payment.js";
 import user from "./routes/user.js";
 
 
-
+console.log(dotenv.config());
 const app = express()
 
 // app.use(bodyParser.json())
