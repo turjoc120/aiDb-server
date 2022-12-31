@@ -1,9 +1,9 @@
 import admin from "../utils/firebase.js";
 
-const auth = async (req, res, next) => {
+const checkAuth = async (req, res, next) => {
     let { authorization } = req.headers;
-    console.log("token ------ " + authorization);
-    console.log("body ------ " + req.body);
+    // console.log("token ------ " + authorization);
+    // console.log("body ------ " + req.body);
     if (!authorization) {
         return res.status(403).json({
             errors: [
@@ -15,11 +15,15 @@ const auth = async (req, res, next) => {
     }
     try {
 
-        const token = req.headers.authorization.split(' ')[1];
+        // removing the (,) form token coming from some requests 
+        let token = req.headers.authorization.split(' ')[1];
+        if (token.charAt(token.length - 1) === ',') {
+            token = token.slice(0, token.length - 1)
+        }
         const decodeVal = await admin.auth().verifyIdToken(token);
 
         if (decodeVal) {
-            req.user = decodeVal;
+            // req.user.uid = decodeVal.uid;
             console.log("hit...decone");
             return next();
         }
@@ -30,4 +34,4 @@ const auth = async (req, res, next) => {
     }
 }
 
-export default auth
+export default checkAuth
