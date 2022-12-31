@@ -27,7 +27,9 @@ app.use('/api/payment', payment)
 app.use('/api/user', user)
 
 
-
+app.get('/', async (req, res) => {
+    res.json({ status: "ok", message: "AI db server is running..." })
+})
 
 const CONNECTION_URL = 'mongodb+srv://mujtaba:iy0NF9mz7WSRVbmg@cluster0.3rpzd78.mongodb.net/?retryWrites=true&w=majority'
 
