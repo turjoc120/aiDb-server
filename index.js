@@ -6,8 +6,7 @@ import dotenv from "dotenv"
 import payment from "./routes/payment.js";
 import user from "./routes/user.js";
 
-
-console.log(dotenv.config());
+dotenv.config()
 const app = express()
 
 // app.use(bodyParser.json())
@@ -32,14 +31,12 @@ app.use('/api/user', user)
 
 const CONNECTION_URL = 'mongodb+srv://mujtaba:iy0NF9mz7WSRVbmg@cluster0.3rpzd78.mongodb.net/?retryWrites=true&w=majority'
 
-const PORT = process.PORT || 5000
 
-
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => console.log(`server running on port ${PORT}`)))
+mongoose.connect(CONNECTION_URL)
+    .then(() => app.listen(process.env.PORT, () => console.log(`server running on port ${process.env.PORT}`)))
     .catch((error) => console.log(error))
 
-mongoose.set('useFindAndModify', false)
+
 
 
 // app.post('/webhook', async (request, response) => {
