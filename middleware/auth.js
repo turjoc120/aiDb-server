@@ -2,8 +2,6 @@ import admin from "../utils/firebase.js";
 
 const checkAuth = async (req, res, next) => {
     let { authorization } = req.headers;
-    // console.log("token ------ " + authorization);
-    // console.log("body ------ " + req.body);
     if (!authorization) {
         return res.status(403).json({
             errors: [
@@ -24,7 +22,7 @@ const checkAuth = async (req, res, next) => {
 
         if (decodeVal) {
             // req.user.uid = decodeVal.uid;
-            console.log("hit...decone");
+            console.log("hit...decode");
             return next();
         }
         return res.json({ message: 'not authorized' });

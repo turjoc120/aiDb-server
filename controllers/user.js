@@ -16,7 +16,7 @@ export const addUser = async (req, res) => {
         // add user to db 
         const userDe = await user.create({ ...req.body, customerId: customer.id })
 
-        res.status(200).json({ status: "valid", userDe: { ...userDe, customerId: customer.id }, message: "user added" })
+        res.status(200).json({ status: "valid", userDe: { ...req.body, customerId: customer.id }, message: "user added" })
     } catch (error) {
         console.log(error);
         res.status(409).json({ message: error.message })
