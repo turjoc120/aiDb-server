@@ -35,12 +35,14 @@ export const checkoutSession = async (req, res) => {
       subscription_data: {
         trial_period_days: 10,
       },
-      success_url: "http://localhost:3000/app/crm/dashboard",
-      cancel_url: "http://localhost:3000/plans"
+      success_url: `${process.env.CLIENT_URL}/app/welcome-page`,
+      cancel_url: `${process.env.CLIENT_URL}/plans`
     })
     // console.log(session);
     //  MVP
-    const updatedUser = await user.findOneAndUpdate({ email: req.body.email }, { $push: { authority: ["premium", "basic"] } })
+    const updatedUser = await user.findOneAndUpdate({ email: userDetails.email }, { $push: { "authority": "premium" } })
+
+    console.log(updatedUser);
 
     res.json({ session, updatedUser })
   } catch (error) {
